@@ -31,8 +31,6 @@ void updateRight(){
 
 
 class EncodedMotors{
-	private:
-
 	public:
 		void begin(){
 			leftEnc.begin(13, 12);

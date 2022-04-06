@@ -1,12 +1,15 @@
 #include <Arduino.h>
+
 #include"Encoder.h"
 #include"Motor.h"
+//#include<Wire.h>
+//#include<LIDARLite.h>
 
 Encoder leftEnc;
 Encoder rightEnc;
 
 //Interrupt ISPs for encoders
-void updateLeft(){
+void IRAM_ATTR updateLeft(){
 	leftEnc.lastCounter = leftEnc.counter;
 	if (digitalRead(leftEnc.pinB) != digitalRead(leftEnc.pinA)) { 
 		leftEnc.counter ++;
@@ -14,7 +17,7 @@ void updateLeft(){
 		leftEnc.counter --;
 	} 
 }
-void updateRight(){
+void IRAM_ATTR updateRight(){
 	rightEnc.lastCounter = rightEnc.counter;
 	if (digitalRead(rightEnc.pinB) != digitalRead(rightEnc.pinA)) { 
 		rightEnc.counter ++;
@@ -24,18 +27,18 @@ void updateRight(){
 }
 
 void setup() {
-	leftEnc.begin(13, 12);
-	rightEnc.begin(11, 10);
-	attachInterrupt(13, updateLeft, CHANGE);
-	attachInterrupt(11, updateRight, CHANGE);
-	
-	//Preinstantiated motorns inside Motor.h
-	right.begin(6, 10, 11);
-	left.begin(5, 9, 8);
+	leftEnc.begin(34, 39);
+	rightEnc.begin(36, 4);
+	attachInterrupt(leftEnc.pinA, updateLeft, CHANGE);
+	attachInterrupt(rightEnc.pinA, updateRight, CHANGE);
 
-	Serial.begin(115000);
+	//Preinstantiated motorns inside Motor.h
+	right.begin(13, 12, 27);
+	left.begin(33, 15, 32);
+	Serial.begin(115200);
 }
 
 void loop() {
-
+	Serial.println("Hello world!");
+	delay(1000);
 }

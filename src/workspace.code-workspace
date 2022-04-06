@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "Lidar",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.tcc": "cpp",
+			"random": "cpp",
+			"iomanip": "cpp",
+			"limits": "cpp",
+			"fstream": "cpp",
+			"iosfwd": "cpp",
+			"istream": "cpp",
+			"sstream": "cpp",
+			"streambuf": "cpp"
+		}
+	}
+}

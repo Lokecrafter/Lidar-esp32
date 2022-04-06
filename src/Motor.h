@@ -6,18 +6,27 @@
 #define RESOLUTION 8
 
 class Motor{
+    private:
+        int enable;
+        int forward;
+        int reverse;
+
+        float speed; 
     public:
+        Motor(){
+           //Do nothing constructor 
+        }
         //enablePin has to bee between 0-15 for PWM to work
-        void begin(byte enablePin, byte forwardPin, byte reversePin){
+        void begin(int enablePin, int forwardPin, int reversePin){
             enable = enablePin;
             forward = forwardPin;
             reverse = reversePin;
-            pinMode(enable, OUTPUT);
-            pinMode(forward, OUTPUT);
-            pinMode(reverse, OUTPUT);
+            pinMode(enablePin, OUTPUT);
+            pinMode(forwardPin, OUTPUT);
+            pinMode(reversePin, OUTPUT);
 
-            ledcSetup(enable, FREQ, RESOLUTION);
-            ledcAttachPin(enable, enable); //Enable is used as pin and channel
+            ledcSetup(enable % 15, FREQ, RESOLUTION);
+            ledcAttachPin(enable, enable % 15); //Enable is used as pin and channel
         }
 
         void setSpeed(float motorSpeed){
@@ -25,7 +34,6 @@ class Motor{
 
             if(motorSpeed == 0){
                 ledcWrite(enable, 0);
-                return;
             }
             else if(motorSpeed > 0){
                 digitalWrite(forward, HIGH);
@@ -36,16 +44,10 @@ class Motor{
                 digitalWrite(reverse, HIGH);
             }
             //PWM command for motor speed
-            ledcWrite(enable, 255 * abs(motorSpeed));
+            //ledcWrite(enable, 255 * abs(motorSpeed));
         }
 
         float getSpeed(){ return speed; }
-    private:
-        byte enable;
-        byte forward;
-        byte reverse;
-
-        float speed; 
 };
 
 
