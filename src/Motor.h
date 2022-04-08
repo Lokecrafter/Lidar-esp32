@@ -58,39 +58,4 @@ float clamp(float val, float minVal, float maxVal){
     return(val);
 }
 
-
-
-
-
-Motor right;
-Motor left;
-const float standardSpeedFactor = 1;
-const float turnSpeedFactor = 1;
-float speedFactor;
-
-
-//Joystick driving with this function
-void driveMotors(float joyX, float joyY){
-    joyX = clamp(joyX, -1, 1);
-    joyY = clamp(joyY, -1, 1);
-
-    if(joyY < 0)  joyX = joyX * -1; //Handles steering so it feels natural by simulating how a car would steer when reversing
-
-    float leftMotor = joyY + joyX;
-    float rightMotor = joyY - joyX;
-
-    leftMotor = clamp(leftMotor, -1, 1);
-    rightMotor = clamp(rightMotor, -1, 1);
-
-    if(joyX == 0){
-        speedFactor = standardSpeedFactor;
-    }
-    else{
-        speedFactor = turnSpeedFactor;
-    }
-
-    right.setSpeed(rightMotor * speedFactor);
-    left.setSpeed(leftMotor * speedFactor);
-}
-
 #endif
